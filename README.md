@@ -46,10 +46,16 @@ irb> "(555)345-9877".to_phone("us", true, ".")
  => "1 555.345.9877"
 irb> "(555)345-9877".to_phone("us", false, ".")
  => "(555) 345.9877"
+
 irb> "999999999".to_ssn
  => "999-99-9999"
 irb> "999999999".to_ssn(".")
  => "999.99.9999"
+irb> "99999999999999999999".to_ssn(".")
+ => "999.99.999999999999999"
+irb> "99999999999999999999".to_ssn(".", true)
+ => "999.99.9999"
+
 irb> "999999".to_lock_combo
  => "99-99-99"
 irb> "999999".to_lock_combo("_")
@@ -58,10 +64,16 @@ irb> "9999999999999".to_lock_combo("_", true)
  => "99_99_99"
 irb> "9999999999999".to_lock_combo(".", true)
  => "99.99.99"
-irb> "99999999999999999999".to_ssn(".")
- => "999.99.999999999999999"
-irb> "99999999999999999999".to_ssn(".", true)
- => "999.99.9999"
+
+irb> "domain.com".to_url
+ => "http://www.domain.com"
+irb> "domain.com".to_url(true)
+ => "https://www.domain.com"
+irb> "domain.com".to_url(true, "sub")
+ => "https://sub.domain.com"
+irb> "domain.com".to_url(false, "sub")
+ => "http://sub.domain.com"
+
 irb> "This gem is stringtastic!".to_morse
  => "– ···· ·· ··· ––· · –– ·· ··· ··· – ·–· ·· –· – ·– ··· – ·· –·–· –·–·––"
 ```
