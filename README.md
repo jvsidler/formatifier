@@ -1,6 +1,6 @@
 # Formatifier
 
-TODO: Write a gem description
+	Quick and dirty string formatter
 
 ## Installation
 
@@ -10,15 +10,61 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
     $ gem install formatifier
 
+## Disclamer
+
+	Testing and Documentation are forthcoming. Just threw this together so functionality will probably change. Feel free to contribute!
+
 ## Usage
 
-TODO: Write usage instructions here
+### Specify outcome explicitly
+```ruby
+irb> "5553459877".formatify("(xxx) xxx-xxxx")
+ => "(555) 345-9877"
+```
+
+### Use convenience methods
+```ruby
+irb> "5553459877".to_phone("us")
+ => "1 555-345-9877"
+irb> "5553459877".to_phone("us", false)
+ => "(555) 345-9877"
+irb> "5553459877".to_phone("us", false, ".")
+ => "(555) 345.9877"
+irb> "5553459877".to_phone("us", true, ".")
+ => "1 555.345.9877"
+irb> "5553459877".to_phone("uk", false)
+ => "55534-598-77"
+irb> "5553459877".to_phone("uk")
+ => "44 5553-459-877"
+irb> "(555)345-9877".to_phone("us", true, ".")
+ => "1 555.345.9877"
+irb> "(555)345-9877".to_phone("us", false, ".")
+ => "(555) 345.9877"
+irb> "999999999".to_ssn
+ => "999-99-9999"
+irb> "999999999".to_ssn(".")
+ => "999.99.9999"
+irb> "999999".to_lock_combo
+ => "99-99-99"
+irb> "999999".to_lock_combo("_")
+ => "99_99_99"
+irb> "9999999999999".to_lock_combo("_", true)
+ => "99_99_99"
+irb> "9999999999999".to_lock_combo(".", true)
+ => "99.99.99"
+irb> "99999999999999999999".to_ssn(".")
+ => "999.99.999999999999999"
+irb> "99999999999999999999".to_ssn(".", true)
+ => "999.99.9999"
+irb> "This gem is stringtastic!".to_morse
+ => "– ···· ·· ··· ––· · –– ·· ··· ··· – ·–· ·· –· – ·– ··· – ·· –·–· –·–·––"
+```
 
 ## Contributing
 

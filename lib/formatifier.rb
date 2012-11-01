@@ -22,7 +22,7 @@ class String
     end
   end
 
-  def to_phone(geo=:us, delimiter="-", international=true)
+  def to_phone(geo="us", international=true, delimiter="-")
 
   # China 1234 5678
   # France  01–23–45–67–89
@@ -33,7 +33,7 @@ class String
   # United States 1 (123) 456 7890
 
     unless nil?
-      case geo
+      case geo.downcase
       # when :ch
       #   if international # 86 10 69445464
       #     formatify()
@@ -70,14 +70,14 @@ class String
       #   else # (0295) 416,72,16
       #     formatify()
       #   end
-      when :uk
+      when "uk"
         if international # 44 7700 954 321
           self.insert(0, "44") unless self.match(/^(44)/)
           formatify("xx xxxx#{delimiter}xxx#{delimiter}xxx")
         else # 07700 954 321
           formatify("xxxxx#{delimiter}xxx#{delimiter}xxx")
         end
-      when :us
+      when "us"
         if international # 1 954 555 1234
           self.insert(0, "1") unless self.match(/^(1)/)
           formatify("x xxx#{delimiter}xxx#{delimiter}xxxx")
@@ -101,12 +101,12 @@ class String
     end
   end
 
-  def to_ssn(delimiter="-")
-    formatify("xxx#{delimiter}xx#{delimiter}xxxx")
+  def to_ssn(delimiter="-", truncate=false)
+    formatify("xxx#{delimiter}xx#{delimiter}xxxx", true, truncate)
   end
 
-  def to_lock_combo(delimiter="-")
-    formatify("xx#{delimiter}xx#{delimiter}xx")
+  def to_lock_combo(delimiter="-", truncate=false)
+    formatify("xx#{delimiter}xx#{delimiter}xx", true, truncate)
   end
 
   def to_isbn
