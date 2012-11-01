@@ -75,7 +75,7 @@ irb> "domain.com".to_url(false, "sub")
  => "http://sub.domain.com"
 
 irb> "This gem is stringtastic!".to_morse
- => "– ···· ·· ··· ––· · –– ·· ··· ··· – ·–· ·· –· – ·– ··· – ·· –·–· –·–·––"
+ => "– ···· ·· ··· ––· · –– ·· ··· ··· – ·–· ·· –· ––· – ·– ··· – ·· –·–· –·–·––"
 ```
 
 ## Contributing
