@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Disclamer
 
-	Testing and Documentation are forthcoming. Just threw this together so functionality will probably change. Feel free to contribute!
+Testing and Documentation are forthcoming. Just threw this together so functionality will probably change. Feel free to contribute!
 
 ## Usage
 
