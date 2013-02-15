@@ -1,0 +1,14 @@
+PATH
+  remote: .
+  specs:
+    formatifier (0.0.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  formatifier!

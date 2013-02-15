@@ -1,6 +1,7 @@
 #!/bin/env ruby
 # encoding: utf-8
 require "formatifier/version"
+require "open-uri"
 
 class String
   def formatify(example, strip=true, truncate=false)
@@ -117,6 +118,12 @@ class String
   def to_morse
     text = split("").each_with_index { |l, i| l.replace(transposer[self[i].downcase] || "[#{l}]")}
     text.join("").chomp(" ")
+  end
+  
+  def to_pirate_speak
+    base = "http://www.isithackday.com/arrpi.php?text="
+    text = self.gsub(' ', '%20')
+    open(base + text) {|f| f.read}
   end
 
 protected
