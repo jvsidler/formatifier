@@ -82,6 +82,7 @@ irb> "This gem is stringtastic!".to_morse
 ```ruby
 irb> "This gem is awesome!".to_pirate_speak
  => "This gem be awesome!"
+```
 
 ## Contributing
 
