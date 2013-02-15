@@ -78,6 +78,12 @@ irb> "This gem is stringtastic!".to_morse
  => "– ···· ·· ··· ––· · –– ·· ··· ··· – ·–· ·· –· ––· – ·– ··· – ·· –·–· –·–·––"
 ```
 
+### Use Awesomeness
+```ruby
+irb> "This gem is awesome!".to_pirate_speak
+ => "This gem be awesome!"
+```
+
 ## Contributing
 
 1. Fork it
