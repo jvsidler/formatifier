@@ -132,7 +132,7 @@ class String
   end
 
   def to_irsa # International Radiotelephony Spelling Alphabet
-    return "Please only attempt one word at a time" if scan(" ")
+    return "Please only attempt one word at a time" unless scan(" ").empty?
     text = split("").each_with_index { |l, i| l.replace(irsa_dict[self[i].downcase] || "[#{l}]")}
     text.join(" ").chomp()
   end
