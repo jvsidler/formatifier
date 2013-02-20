@@ -83,8 +83,14 @@ irb> "This gem is stringtastic!".to_morse
 irb> "This gem is awesome!".to_pirate_speak
  => "This gem be awesome!"
 
-irb> puts "Hey noobs, I'm going to like totally like own you noobs".to_leet_speak
+irb> "Hey noobs, I'm going to like totally like own you noobs".to_leet_speak
  => "#3'/ n00bs, 1'/\/\ 601/\/6 70 |1|<3 7074||'/ |1|<3 pwn u n00bs"
+
+ irb> "What's your vector victor?".to_irsa
+  => "whiskey hotel alfa tango ['] sierra  |  yankee oscar uniform romeo  |  victor echo charlie tango oscar romeo  |  victor india charlie tango oscar romeo [?]"
+
+ irb> "supercalifragalisticexpialidocious".to_irsa
+  => "sierra uniform papa echo romeo charlie alfa lima india foxtrot romeo alfa golf alfa lima india sierra tango india charlie echo x-ray papa india alfa lima india delta oscar charlie india oscar uniform sierra"
 ```
 
 ## Contributing
