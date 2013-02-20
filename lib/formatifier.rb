@@ -119,11 +119,16 @@ class String
     text = split("").each_with_index { |l, i| l.replace(transposer[self[i].downcase] || "[#{l}]")}
     text.join("").chomp(" ")
   end
-  
+
   def to_pirate_speak
     base = "http://www.isithackday.com/arrpi.php?text="
     text = self.gsub(' ', '%20')
     open(base + text) {|f| f.read}
+  end
+
+  def to_leet_speak(random = false)
+    text = split(/( |,)/).map{|w| leet_replace(w, random)}
+    text.join.chomp(" ")
   end
 
 protected
@@ -210,4 +215,56 @@ protected
     self.gsub!(/(\W|\s|_)/, "")
   end
 
+  def leet_replace(w,random)
+    if leet_translations[w.downcase]
+      [w.replace(leet_translations[w.downcase].send(random ? "sample" : "first"))]
+    else
+      w.size > 1 ? w.split("").each{|l| leet_replace(l,random)} : [w]
+    end
+  end
+
+  def leet_translations
+    {
+      "leet"     => ["1337"],
+      "the"      => ["teh"],
+      "cool"     => ["kewl"],
+      "dude"     => ["d00d"],
+      "you"      => ["u"],
+      "noob"     => ["n00b"],
+      "noobs"    => ["n00bs"],
+      "own"      => ["pwn"],
+      "owned"    => ["pwned"],
+      "rocks"    => ["roxx0rs"],
+      "exploits" => ["sploitz"],
+      "woot"     => ["w00t"],
+      "hacker"   => ["hax0r"],
+      "hackers"  => ["hax0rz"],
+      "a"        => ["4","@"],
+      "b"        => ["8","]3","]8","|3","|8","13"],
+      "c"        => ["(","{"],
+      "d"        => [")","[}","|)","|}","|>"],
+      "e"        => ["3"],
+      "f"        => ["|=","ph"],
+      "g"        => ["6","9","&"],
+      "h"        => ["#","|-|"],
+      "i"        => ["1","!","|"],
+      "j"        => ["_|","u|"],
+      "k"        => ["|<", "|{"],
+      "l"        => ["|","1","|_"],
+      "m"        => ["/\\/\\","|\\/|"],
+      "n"        => ["/\\/", "|\\|"],
+      "o"        => ["0", "()"],
+      "p"        => ["|D", "|*"],
+      "q"        => ["(,)","O\\","[]\\"],
+      "r"        => ["|2", "|?","][2"],
+      "s"        => ["5","$"],
+      "t"        => ["7","+"],
+      "u"        => ["(_)", "|_|"],
+      "v"        => ["\\/" ,"\\\\//"],
+      "w"        => ["\\/\\/","|/\\|","VV"],
+      "x"        => ["><", "}{"],
+      "y"        => ["'/","%"],
+      "z"        => ["2","7_"]
+    }
+  end
 end
