@@ -116,7 +116,7 @@ class String
   end
 
   def to_morse
-    text = split("").each_with_index { |l, i| l.replace(transposer[self[i].downcase] || "[#{l}]")}
+    text = split("").each_with_index { |l, i| l.replace(morse_dict[self[i].downcase] || "[#{l}]")}
     text.join("").chomp(" ")
   end
 
@@ -131,9 +131,121 @@ class String
     text.join.chomp(" ")
   end
 
+  def to_irsa # International Radiotelephony Spelling Alphabet
+    return "Please only attempt one word at a time" if scan(" ")
+    text = split("").each_with_index { |l, i| l.replace(irsa_dict[self[i].downcase] || "[#{l}]")}
+    text.join(" ").chomp()
+  end
+
 protected
 
-  def transposer
+  def isbn_checksum(isbn_string)
+    digits = isbn_string.split(//).map(&:to_i)
+    transformed_digits = digits.each_with_index.map do |digit, digit_index|
+      digit_index.modulo(2).zero? ? digit : digit*3
+    end
+    sum = transformed_digits.reduce(:+)
+  end
+
+  def is_valid_isbn13?(isbn13)
+    checksum = isbn_checksum(isbn13)
+    checksum.modulo(10).zero?
+  end
+
+  def isbn13_checksum_digit(isbn12)
+    checksum = isbn_checksum(isbn12)
+    10 - checksum.modulo(10)
+  end
+
+  def strip_out_all_non_word_characters
+    self.gsub!(/(\W|\s|_)/, "")
+  end
+
+  def leet_replace(w,random)
+    if leet_dict[w.downcase]
+      [w.replace(leet_dict[w.downcase].send(random ? "sample" : "first"))]
+    else
+      w.size > 1 ? w.split("").each{|l| leet_replace(l,random)} : [w]
+    end
+  end
+
+  def leet_dict
+    {
+      "leet"     => ["1337"],
+      "the"      => ["teh"],
+      "cool"     => ["kewl"],
+      "dude"     => ["d00d"],
+      "you"      => ["u"],
+      "noob"     => ["n00b"],
+      "noobs"    => ["n00bs"],
+      "own"      => ["pwn"],
+      "owned"    => ["pwned"],
+      "rocks"    => ["roxx0rs"],
+      "exploits" => ["sploitz"],
+      "woot"     => ["w00t"],
+      "hacker"   => ["hax0r"],
+      "hackers"  => ["hax0rz"],
+      "a"        => ["4","@"],
+      "b"        => ["8","]3","]8","|3","|8","13"],
+      "c"        => ["(","{"],
+      "d"        => [")","[}","|)","|}","|>"],
+      "e"        => ["3"],
+      "f"        => ["|=","ph"],
+      "g"        => ["6","9","&"],
+      "h"        => ["#","|-|"],
+      "i"        => ["1","!","|"],
+      "j"        => ["_|","u|"],
+      "k"        => ["|<", "|{"],
+      "l"        => ["|","1","|_"],
+      "m"        => ["/\\/\\","|\\/|"],
+      "n"        => ["/\\/", "|\\|"],
+      "o"        => ["0", "()"],
+      "p"        => ["|D", "|*"],
+      "q"        => ["(,)","O\\","[]\\"],
+      "r"        => ["|2", "|?","][2"],
+      "s"        => ["5","$"],
+      "t"        => ["7","+"],
+      "u"        => ["(_)", "|_|"],
+      "v"        => ["\\/" ,"\\\\//"],
+      "w"        => ["\\/\\/","|/\\|","VV"],
+      "x"        => ["><", "}{"],
+      "y"        => ["'/","%"],
+      "z"        => ["2","7_"]
+    }
+  end
+
+  def irsa_dict
+    {
+      "a" => "alfa",
+      "b" => "bravo",
+      "c" => "charlie",
+      "d" => "delta",
+      "e" => "echo",
+      "f" => "foxtrot",
+      "g" => "golf",
+      "h" => "hotel",
+      "i" => "india",
+      "j" => "juliet",
+      "k" => "kilo",
+      "l" => "lima",
+      "m" => "mike",
+      "n" => "november",
+      "o" => "oscar",
+      "p" => "papa",
+      "q" => "quebec",
+      "r" => "romeo",
+      "s" => "sierra",
+      "t" => "tango",
+      "u" => "uniform",
+      "v" => "victor",
+      "w" => "whiskey",
+      "x" => "x-ray",
+      "y" => "yankee",
+      "z" => "zulu"
+    }
+  end
+
+  def morse_dict
     {
       " " => "",
       "a" => "·– ",
@@ -190,81 +302,6 @@ protected
       "\"" => "·–··–· ",
       "$" => "···–··– ",
       "@" => "·––·–· ",
-    }
-  end
-
-  def isbn_checksum(isbn_string)
-    digits = isbn_string.split(//).map(&:to_i)
-    transformed_digits = digits.each_with_index.map do |digit, digit_index|
-      digit_index.modulo(2).zero? ? digit : digit*3
-    end
-    sum = transformed_digits.reduce(:+)
-  end
-
-  def is_valid_isbn13?(isbn13)
-    checksum = isbn_checksum(isbn13)
-    checksum.modulo(10).zero?
-  end
-
-  def isbn13_checksum_digit(isbn12)
-    checksum = isbn_checksum(isbn12)
-    10 - checksum.modulo(10)
-  end
-
-  def strip_out_all_non_word_characters
-    self.gsub!(/(\W|\s|_)/, "")
-  end
-
-  def leet_replace(w,random)
-    if leet_translations[w.downcase]
-      [w.replace(leet_translations[w.downcase].send(random ? "sample" : "first"))]
-    else
-      w.size > 1 ? w.split("").each{|l| leet_replace(l,random)} : [w]
-    end
-  end
-
-  def leet_translations
-    {
-      "leet"     => ["1337"],
-      "the"      => ["teh"],
-      "cool"     => ["kewl"],
-      "dude"     => ["d00d"],
-      "you"      => ["u"],
-      "noob"     => ["n00b"],
-      "noobs"    => ["n00bs"],
-      "own"      => ["pwn"],
-      "owned"    => ["pwned"],
-      "rocks"    => ["roxx0rs"],
-      "exploits" => ["sploitz"],
-      "woot"     => ["w00t"],
-      "hacker"   => ["hax0r"],
-      "hackers"  => ["hax0rz"],
-      "a"        => ["4","@"],
-      "b"        => ["8","]3","]8","|3","|8","13"],
-      "c"        => ["(","{"],
-      "d"        => [")","[}","|)","|}","|>"],
-      "e"        => ["3"],
-      "f"        => ["|=","ph"],
-      "g"        => ["6","9","&"],
-      "h"        => ["#","|-|"],
-      "i"        => ["1","!","|"],
-      "j"        => ["_|","u|"],
-      "k"        => ["|<", "|{"],
-      "l"        => ["|","1","|_"],
-      "m"        => ["/\\/\\","|\\/|"],
-      "n"        => ["/\\/", "|\\|"],
-      "o"        => ["0", "()"],
-      "p"        => ["|D", "|*"],
-      "q"        => ["(,)","O\\","[]\\"],
-      "r"        => ["|2", "|?","][2"],
-      "s"        => ["5","$"],
-      "t"        => ["7","+"],
-      "u"        => ["(_)", "|_|"],
-      "v"        => ["\\/" ,"\\\\//"],
-      "w"        => ["\\/\\/","|/\\|","VV"],
-      "x"        => ["><", "}{"],
-      "y"        => ["'/","%"],
-      "z"        => ["2","7_"]
     }
   end
 end
